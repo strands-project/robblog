@@ -29,7 +29,6 @@
   <run_depend>sensor_msgs</run_depend>
   <run_depend>opencv2</run_depend>
   <run_depend>nodejs</run_depend>
-  <run_depend>jekyll</run_depend>
 
   <buildtool_depend>ruby1.9.3</buildtool_depend>
   <buildtool_depend>nodejs</buildtool_depend>
