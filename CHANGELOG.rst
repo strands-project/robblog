@@ -2,8 +2,8 @@
 Changelog for package robblog
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.0.1 (2014-11-10)
+------------------
 * Added seconds to robblog title.
 * Added seconds to robblog timed entry title.
 * Adding nodejs to required dependencies
