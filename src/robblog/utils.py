@@ -38,7 +38,7 @@ def which(program):
 
     return None
 
-def init_blog(path):
+def init_blog(path, config_file_path = None, default_layout_file_path = None):
     """ If path does not exist, create it and init jekyll here """
     if not os.path.isdir(path):
         os.makedirs(path)
@@ -51,18 +51,24 @@ def init_blog(path):
         proc.wait()
 
 
-        path = path + '/robblog'
+        path = os.path.join(path, 'robblog')
  
         if not os.path.isdir(path):
             raise Exception('jekyll creation problm. rm -rf %s and try again' % path)
 
         # now put in default files
-        data_path = roslib.packages.get_pkg_dir('robblog') + '/data'      
+        data_path = os.path.join(roslib.packages.get_pkg_dir('robblog'),'data')
         
+        if config_file_path is None:
+            config_file_path = os.path.join(data_path, '_config.yml')
+
+        # if default_layout_file_path is None:
+        #     default_layout_file_path = os.path.join(data_path, 'default.html')
 
 
-        shutil.copy(data_path + '/_config.yml', path)
-        shutil.copy(data_path + '/default.html', path + '/_layouts')
+        print(config_file_path, path)
+        shutil.copy(config_file_path, path)
+        # shutil.copy(default_layout_file_path, os.path.join(path,'_layouts'))
 
         # and delete the post created by the install
         filelist = os.listdir(path + '/_posts')
@@ -140,7 +146,12 @@ class EntryConverter(object):
                 file_name = file_date + '-' + file_title + '.md'
                 with open(self.post_path + file_name, 'w+') as f:
                     # write file
-                    f.write('---\nlayout: post\ntitle: %s\n---\n' % entry.title)
+
+                    front_matter = 'layout: post\ntitle: %s\n' % entry.title
+                    for string_pair in entry.front_matter:
+                        front_matter += '%s: %s\n' % (string_pair.first, string_pair.second)
+
+                    f.write('---\n%s \n---\n' % front_matter)
 
                     oids = []
                     for m in re.finditer('ObjectID\([0-9a-fA-F]+\)', entry.body):

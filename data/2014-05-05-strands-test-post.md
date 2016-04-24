@@ -1,6 +1,7 @@
 ---
 layout: post
 title: STRANDS Test Post
+category: tests
 ---
 
 This is a **test**.
