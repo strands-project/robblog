@@ -65,7 +65,7 @@ if __name__ == '__main__':
             while not rospy.is_shutdown():
                 # supply True convert to force all pages to be regenerated
                 converter.convert()
-                rospy.sleep(1)
+                rospy.sleep(60)
 
         except Exception, e:
                     rospy.logfatal(e)
