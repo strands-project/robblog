@@ -6,7 +6,7 @@ import shutil
 from mongodb_store.message_store import MessageStoreProxy
 from robblog.msg import RobblogEntry
 import re
-import cv
+import cv2
 from sensor_msgs.msg import Image
 from cv_bridge import CvBridge, CvBridgeError
 from datetime import *
@@ -57,7 +57,10 @@ def init_blog(path):
             raise Exception('jekyll creation problm. rm -rf %s and try again' % path)
 
         # now put in default files
-        data_path = roslib.packages.get_pkg_dir('robblog') + '/data'
+        data_path = roslib.packages.get_pkg_dir('robblog') + '/data'      
+        
+
+
         shutil.copy(data_path + '/_config.yml', path)
         shutil.copy(data_path + '/default.html', path + '/_layouts')
 
@@ -111,8 +114,8 @@ class EntryConverter(object):
         if not msg:
             raise Exception('No matching message_store entry %s' % (oid))
 
-        cv_image = self.bridge.imgmsg_to_cv(msg, desired_encoding="passthrough")
-        cv.SaveImage(self.image_path + filename, cv_image)
+        cv_image = self.bridge.imgmsg_to_cv2(msg, desired_encoding="passthrough")
+        cv2.imwrite(self.image_path + filename, cv_image)
       
         return filename
 

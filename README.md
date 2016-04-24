@@ -7,17 +7,23 @@ Robblog is a tool which converts entries from the [mongodb_store](https://github
 Robblog currently uses [Jekyll](http://jekyllrb.com) to generate pages. To install the dependencies under Ubuntu do:
 
 ```bash
-sudo apt-get install ruby1.9.1-dev 
+sudo apt-get install ruby1.9.1-dev nodejs
 sudo gem install jekyll
-sudo apt-get install nodejs
 ```
+On OS X do:
+
+```bash
+brew install ruby nodejs
+gem install jekyll
+```
+
 ## Usage
 
-Robblog has two parts: clients which add `robblog/RobblogEntry` entries to the datacentre, and the blog engine which creates blog posts from these entries. 
+Robblog has two parts: clients which add `robblog/RobblogEntry` entries to mongodb_store, and the blog engine which creates blog posts from these entries. 
 
 ### Running the Robblog engine
 
-The configuration information that you need to run Robblog is as follows: the datacentre collection to monitor for new entries; the path on the system where Jekyll will create your blog; and the hostname and port to server the webblog at. The code snippet below shows how to create and configure your blog. In this example the datacentre collection is provided as an argument `EntryConverter` (`'robblog'`), the system path is the `blog_path` variable which is defined relative to the `y1_interfaces` package (`roslib.packages.get_pkg_dir('y1_interfaces') + '/content'`), and the host details are obtained from local parameters if provided. 
+The configuration information that you need to run Robblog is as follows: mongodb_store collection to monitor for new entries; the path on the system where Jekyll will create your blog; and the hostname and port to server the webblog at. The code snippet below shows how to create and configure your blog. In this example mongodb_store collection is provided as an argument `EntryConverter` (`'robblog'`), the system path is the `blog_path` variable which is defined relative to the `y1_interfaces` package (`roslib.packages.get_pkg_dir('y1_interfaces') + '/content'`), and the host details are obtained from local parameters if provided. 
 
 ```python
 #!/usr/bin/env python
@@ -72,7 +78,7 @@ The title is translated into the title of the blog post and the name of the mark
 
 ## Title choice
 
-To march Jekyll's structuring rules, each entry is converted into a file which is named using the date (YYYY-MM-DD) plus the title (with spaces converted to hyphens). If you create two entries on the same day with the same title this will only create one blog entry in Jekyll, despite their being two different entries in the datacentre. Until Robblog is updated to fix this, if you do plan to create muliple entries with the same title on the same day, it might be worth adding a counter or some other unique characters to the title.
+To march Jekyll's structuring rules, each entry is converted into a file which is named using the date (YYYY-MM-DD) plus the title (with spaces converted to hyphens). If you create two entries on the same day with the same title this will only create one blog entry in Jekyll, despite their being two different entries in mongodb_store. Until Robblog is updated to fix this, if you do plan to create muliple entries with the same title on the same day, it might be worth adding a counter or some other unique characters to the title.
 
 
 ## Illegal characters
@@ -81,7 +87,7 @@ As titles are turned into filenames, you need to avoid illegal characters. Curre
 
 ## Images
 
-Images can be included in entries. To include one, you must add the image to the datacentre, retaining the object ID you receive in response. You can then use standard Markdown image inclusion, but replace the image URL with the object ID wrapped in `ObjectID()`, e.g. 
+Images can be included in entries. To include one, you must add the image to mongodb_store, retaining the object ID you receive in response. You can then use standard Markdown image inclusion, but replace the image URL with the object ID wrapped in `ObjectID()`, e.g. 
 
 ```markdown
 [My helpful screenshot](ObjectID(5367e93d54a6f7f69297335e))
@@ -92,7 +98,7 @@ This ID is used to automatically create a jpeg image to include in the blog post
 
 # Example
 
-The following example (also available [in full here](https://github.com/strands-project/strands_ui/blob/hydro-devel/robblog/scripts/robblog_example.py)) adds a few entries to the datacentre then serves them. Once you've run this go to [http://localhost:4040](http://localhost:4040) and you should see the blog entries.
+The following example (also available [in full here](https://github.com/strands-project/strands_ui/blob/hydro-devel/robblog/scripts/robblog_example.py)) adds a few entries to mongodb_store then serves them. Once you've run this go to [http://localhost:4040](http://localhost:4040) and you should see the blog entries.
 
 ```python
 #!/usr/bin/env python
