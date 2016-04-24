@@ -6,7 +6,7 @@ import shutil
 from mongodb_store.message_store import MessageStoreProxy
 from robblog.msg import RobblogEntry
 import re
-import cv
+import cv2
 from sensor_msgs.msg import Image
 from cv_bridge import CvBridge, CvBridgeError
 from datetime import *
@@ -38,7 +38,7 @@ def which(program):
 
     return None
 
-def init_blog(path):
+def init_blog(path, config_file_path = None, default_layout_file_path = None):
     """ If path does not exist, create it and init jekyll here """
     if not os.path.isdir(path):
         os.makedirs(path)
@@ -51,20 +51,33 @@ def init_blog(path):
         proc.wait()
 
 
-        path = path + '/robblog'
+        path = os.path.join(path, 'robblog')
  
         if not os.path.isdir(path):
             raise Exception('jekyll creation problm. rm -rf %s and try again' % path)
 
         # now put in default files
-        data_path = roslib.packages.get_pkg_dir('robblog') + '/data'
-        shutil.copy(data_path + '/_config.yml', path)
-        shutil.copy(data_path + '/default.html', path + '/_layouts')
+        data_path = os.path.join(roslib.packages.get_pkg_dir('robblog'),'data')
+        
+
+        # if a config is not provided use a default STRANDS one
+        if config_file_path is None:
+            config_file_path = os.path.join(data_path, '_config.yml')
+
+        # if default_layout_file_path is None:
+        #     default_layout_file_path = os.path.join(data_path, 'default.html')
+
+
+        print(config_file_path, path)
+        shutil.copy(config_file_path, path)
+        # shutil.copy(default_layout_file_path, os.path.join(path,'_layouts'))
 
         # and delete the post created by the install
         filelist = os.listdir(path + '/_posts')
         for f in filelist:
             os.remove(path + '/_posts/' + f)
+
+        os.remove(path + '/about.md')
 
 def serve(path, host, port):
     """ Starts jekyll server, return Popen process its runnig in. """
@@ -111,8 +124,8 @@ class EntryConverter(object):
         if not msg:
             raise Exception('No matching message_store entry %s' % (oid))
 
-        cv_image = self.bridge.imgmsg_to_cv(msg, desired_encoding="passthrough")
-        cv.SaveImage(self.image_path + filename, cv_image)
+        cv_image = self.bridge.imgmsg_to_cv2(msg, desired_encoding="passthrough")
+        cv2.imwrite(self.image_path + filename, cv_image)
       
         return filename
 
@@ -137,7 +150,12 @@ class EntryConverter(object):
                 file_name = file_date + '-' + file_title + '.md'
                 with open(self.post_path + file_name, 'w+') as f:
                     # write file
-                    f.write('---\nlayout: post\ntitle: %s\n---\n' % entry.title)
+
+                    front_matter = 'layout: post\ntitle: %s\n' % entry.title
+                    for string_pair in entry.front_matter:
+                        front_matter += '%s: %s\n' % (string_pair.first, string_pair.second)
+
+                    f.write('---\n%s \n---\n' % front_matter)
 
                     oids = []
                     for m in re.finditer('ObjectID\([0-9a-fA-F]+\)', entry.body):
@@ -154,7 +172,6 @@ class EntryConverter(object):
                     f.write(body)
                     
                     
-
                     f.write('\n')
                     f.close()
                     # 

@@ -8,6 +8,8 @@ find_package(catkin REQUIRED COMPONENTS
   mongodb_store
   rospy
   message_generation
+  mongodb_store_msgs
+  actionlib_msgs
 )
 
 ## System dependencies are found with CMake's conventions
@@ -65,8 +67,8 @@ add_message_files(
 
 # Generate added messages and services with any dependencies listed here
 generate_messages(
-  # DEPENDENCIES
-  # std_msgs  # Or other packages containing msgs
+  DEPENDENCIES
+  mongodb_store_msgs 
 )
 
 ###################################
