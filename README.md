@@ -108,7 +108,7 @@ import roslib
 from mongodb_store.message_store import MessageStoreProxy
 from robblog.msg import RobblogEntry
 import robblog.utils
-import cv
+import cv2
 from sensor_msgs.msg import Image
 from cv_bridge import CvBridge, CvBridgeError
 
@@ -117,11 +117,14 @@ from datetime import *
 if __name__ == '__main__':
     rospy.init_node("robblog_example")
 
+    blog_collection = 'example_blog'
 
     # Create some blog entries
-    msg_store = MessageStoreProxy(collection='example_blog')
+    msg_store = MessageStoreProxy(collection=blog_collection)
 
     create_entries = True
+
+    robblog_path =  roslib.packages.get_pkg_dir('robblog') 
 
     if create_entries:
         e1 = RobblogEntry(title='Test Title 1', body='blah blah')
@@ -132,15 +135,15 @@ if __name__ == '__main__':
         msg_store.insert(e3)
 
         # add a complex markdown example
-        with open(roslib.packages.get_pkg_dir('robblog') + '/data/example.md' , 'r') as f:
+        with open(robblog_path + '/data/example.md' , 'r') as f:
             e4 = RobblogEntry(title='Markdown Example', body=f.read())
             msg_store.insert(e4)
             # print e4
 
         # add an example with an image
-        cv_image = cv.LoadImage(roslib.packages.get_pkg_dir('robblog') + '/data/rur.jpg')
+        cv_image = cv2.imread(robblog_path + '/data/rur.jpg')
         bridge = CvBridge()
-        img_msg = bridge.cv_to_imgmsg(cv_image)
+        img_msg = bridge.cv2_to_imgmsg(cv_image)
         img_id = msg_store.insert(img_msg)
         e5 = RobblogEntry(title='Image Test', body='This is what a robot looks like.\n\n![My helpful screenshot](ObjectID(%s))' % img_id)
         msg_store.insert(e5)
@@ -150,14 +153,14 @@ if __name__ == '__main__':
 
     if serve:
         # where are the blog files going to be put
-        blog_path = roslib.packages.get_pkg_dir('robblog') + '/content'
+        blog_path = robblog_path + '/content'
         
         # initialise blog
         robblog.utils.init_blog(blog_path)
         proc = robblog.utils.serve(blog_path, 'localhost', '4040')
 
         try: 
-            converter = robblog.utils.EntryConverter(blog_path=blog_path, collection='example_blog')
+            converter = robblog.utils.EntryConverter(blog_path=blog_path, collection=blog_collection)
             
 
             while not rospy.is_shutdown():
@@ -169,6 +172,8 @@ if __name__ == '__main__':
                     rospy.logfatal(e)
         finally:
             proc.terminate()
+
+
 
 ```
 
