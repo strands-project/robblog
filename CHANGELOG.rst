@@ -2,6 +2,14 @@
 Changelog for package robblog
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* really put the scripts in now
+* Merge pull request `#10 <https://github.com/strands-project/robblog/issues/10>`_ from hawesie/hydro-devel
+  Added install
+* Added install
+* Contributors: Nick Hawes
+
 0.1.1 (2016-04-25)
 ------------------
 * fixing jekyll dependencies (`#8 <https://github.com/strands-project/robblog/issues/8>`_)
