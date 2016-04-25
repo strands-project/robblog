@@ -2,6 +2,17 @@
 Changelog for package robblog
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Added install
+* Merge pull request `#6 <https://github.com/strands-project/robblog/issues/6>`_ from hawesie/hydro-devel
+  Updated for OpenCV 2
+* Cleaning up the basic config
+* Adding ability to supply front matter with posts.
+* Updated the example
+* Updated for OpenCV 2
+* Contributors: Nick Hawes
+
 0.0.1 (2014-11-10)
 ------------------
 * Added seconds to robblog title.
