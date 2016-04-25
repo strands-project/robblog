@@ -29,11 +29,11 @@
   <run_depend>cv_bridge</run_depend>
   <run_depend>sensor_msgs</run_depend>
   <run_depend>nodejs</run_depend>
-  <run_depend>rubygem-jekyll</run_depend>
+  <run_depend>jekyll-trusty</run_depend>
   <run_depend>mongodb_store_msgs</run_depend>
   <run_depend>actionlib_msgs</run_depend>
 
-  <buildtool_depend>ruby1.9.3</buildtool_depend>
+  <buildtool_depend>ruby</buildtool_depend>
   <buildtool_depend>nodejs</buildtool_depend>
 
   <export>
