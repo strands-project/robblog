@@ -2,8 +2,8 @@
 Changelog for package robblog
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.1.0 (2016-04-25)
+------------------
 * Added install
 * Merge pull request `#6 <https://github.com/strands-project/robblog/issues/6>`_ from hawesie/hydro-devel
   Updated for OpenCV 2
