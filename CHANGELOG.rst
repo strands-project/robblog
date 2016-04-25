@@ -2,8 +2,8 @@
 Changelog for package robblog
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.1.1 (2016-04-25)
+------------------
 * fixing jekyll dependencies (`#8 <https://github.com/strands-project/robblog/issues/8>`_)
   * fixing jekyll dependencies
   everything is different for ruby in trusty :-(
