@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package>
   <name>robblog</name>
-  <version>0.1.1</version>
+  <version>0.1.2</version>
   <description>The robblog package</description>
 
   <maintainer email="n.a.hawes@cs.bham.ac.uk">Nick Hawes</maintainer>

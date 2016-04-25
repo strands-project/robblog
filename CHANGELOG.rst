@@ -2,8 +2,8 @@
 Changelog for package robblog
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.1.2 (2016-04-25)
+------------------
 * really put the scripts in now
 * Merge pull request `#10 <https://github.com/strands-project/robblog/issues/10>`_ from hawesie/hydro-devel
   Added install
