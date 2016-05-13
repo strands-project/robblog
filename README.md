@@ -4,17 +4,17 @@ Robblog is a tool which converts entries from the [mongodb_store](https://github
 
 ## Installation
 
-Robblog currently uses [Jekyll](http://jekyllrb.com) to generate pages. To install the dependencies under Ubuntu do:
+Robblog currently uses [Jekyll](http://jekyllrb.com) (version 2) to generate pages. To install the dependencies under Ubuntu 14.04 do:
 
 ```bash
-sudo apt-get install ruby1.9.1-dev nodejs
-sudo gem install jekyll
+sudo apt-get ruby1-dev nodejs
+sudo -E gem install jekyll -v 2.5.3
 ```
 On OS X do:
 
 ```bash
 brew install ruby nodejs
-gem install jekyll
+gem install jekyll -v 2.5.3
 ```
 
 ## Usage
