@@ -78,7 +78,7 @@ def init_blog(path, config_file_path = None, default_layout_file_path = None):
 def serve(path, host, port):
     """ Starts jekyll server, return Popen process its runnig in. """
     if not os.path.isdir(path):
-        raise Exception('Blog path %s does not exist. Run init_blog with this path first.')
+        raise Exception('Blog path %s does not exist. Run init_blog with this path first.' % path)
     
     path = path + '/robblog'
 
