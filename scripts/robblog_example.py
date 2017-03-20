@@ -15,7 +15,7 @@ from datetime import *
 if __name__ == '__main__':
     rospy.init_node("robblog_example")
 
-    blog_collection = 'example_blog'
+    blog_collection = 'erf_blog'
 
     # Create some blog entries
     msg_store = MessageStoreProxy(collection=blog_collection)
@@ -48,7 +48,7 @@ if __name__ == '__main__':
         msg_store.insert(e5)
 
 
-    serve = True
+    serve = False
 
     if serve:
         # where are the blog files going to be put
