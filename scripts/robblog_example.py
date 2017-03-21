@@ -15,7 +15,7 @@ from datetime import *
 if __name__ == '__main__':
     rospy.init_node("robblog_example")
 
-    blog_collection = 'erf_blog'
+    blog_collection = 'tsc_blog'
 
     # Create some blog entries
     msg_store = MessageStoreProxy(collection=blog_collection)
