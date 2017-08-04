@@ -59,6 +59,8 @@ def init_blog(path, config_file_path = None, default_layout_file_path = None):
         # now put in default files
         data_path = os.path.join(roslib.packages.get_pkg_dir('robblog'),'data')
         
+
+        # if a config is not provided use a default STRANDS one
         if config_file_path is None:
             config_file_path = os.path.join(data_path, '_config.yml')
 
@@ -74,6 +76,8 @@ def init_blog(path, config_file_path = None, default_layout_file_path = None):
         filelist = os.listdir(path + '/_posts')
         for f in filelist:
             os.remove(path + '/_posts/' + f)
+
+        os.remove(path + '/about.md')
 
 def serve(path, host, port):
     """ Starts jekyll server, return Popen process its runnig in. """
@@ -141,9 +145,15 @@ class EntryConverter(object):
         for entry, meta in unprocessed:
             try:
                 file_title = entry.title.replace(' ', '-')
+
                 date = meta['inserted_at']
                 file_date = date.strftime("%Y-%m-%d")
                 file_name = file_date + '-' + file_title + '.md'
+                file_name = file_name.replace('/','_')
+
+
+                # print self.post_path + file_name
+
                 with open(self.post_path + file_name, 'w+') as f:
                     # write file
 
@@ -168,7 +178,6 @@ class EntryConverter(object):
                     f.write(body)
                     
                     
-
                     f.write('\n')
                     f.close()
                     # 

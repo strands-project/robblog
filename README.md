@@ -106,12 +106,13 @@ The following example (also available [in full here](https://github.com/strands-
 import rospy
 import roslib
 from mongodb_store.message_store import MessageStoreProxy
+from mongodb_store_msgs.msg import StringPair
 from robblog.msg import RobblogEntry
 import robblog.utils
 import cv2
 from sensor_msgs.msg import Image
 from cv_bridge import CvBridge, CvBridgeError
-
+import os
 from datetime import *
 
 if __name__ == '__main__':
@@ -146,6 +147,7 @@ if __name__ == '__main__':
         img_msg = bridge.cv2_to_imgmsg(cv_image)
         img_id = msg_store.insert(img_msg)
         e5 = RobblogEntry(title='Image Test', body='This is what a robot looks like.\n\n![My helpful screenshot](ObjectID(%s))' % img_id)
+        e5.front_matter = [StringPair('category', 'test')]
         msg_store.insert(e5)
 
 
@@ -153,7 +155,7 @@ if __name__ == '__main__':
 
     if serve:
         # where are the blog files going to be put
-        blog_path = robblog_path + '/content'
+        blog_path = os.path.join(robblog_path, 'content')
         
         # initialise blog
         robblog.utils.init_blog(blog_path)
@@ -166,13 +168,12 @@ if __name__ == '__main__':
             while not rospy.is_shutdown():
                 # supply True convert to force all pages to be regenerated
                 converter.convert()
-                rospy.sleep(1)
+                rospy.sleep(60)
 
         except Exception, e:
                     rospy.logfatal(e)
         finally:
             proc.terminate()
-
 
 
 ```
